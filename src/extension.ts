@@ -6,10 +6,10 @@ import { makePathParameters } from "./utils";
 export const activate = (context: vscode.ExtensionContext) => {
   const disposable = vscode.commands.registerCommand("vscode-tempfile.newfile", () => {
     const config = vscode.workspace.getConfiguration("tempfile");
-    const pathTemplate = config.get<string>("newFilePath");
+    let pathTemplate = config.get<string>("newFilePath");
 
     if (!pathTemplate) {
-      throw new Error("newFilePath is not set");
+      pathTemplate = "{{tmpdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{SSS}.md";
     }
 
     const filePath = mustache.render(pathTemplate, makePathParameters(new Date()));

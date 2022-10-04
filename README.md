@@ -1,2 +1,2 @@
-# vscode-create-tempfile
+# vscode-tempfile
 

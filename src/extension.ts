@@ -1,13 +1,23 @@
 import * as vscode from "vscode";
-import * as os from "os";
 import * as fs from "fs";
+import * as mustache from "mustache";
+import { makePathParameters } from "./utils";
 
-export function activate(context: vscode.ExtensionContext) {
-  const disposable = vscode.commands.registerCommand("vscode-create-tempfile.newfile", () => {
-    const dt = formatDate(new Date());
-    const filePath = `${os.tmpdir()}/${dt}.txt`;
+export const activate = (context: vscode.ExtensionContext) => {
+  const disposable = vscode.commands.registerCommand("vscode-tempfile.newfile", () => {
+    const config = vscode.workspace.getConfiguration("tempfile");
+    const pathTemplate = config.get<string>("newFilePath");
 
-    fs.writeFileSync(filePath, "");
+    if (!pathTemplate) {
+      throw new Error("newFilePath is not set");
+    }
+
+    const filePath = mustache.render(pathTemplate, makePathParameters(new Date()));
+
+    if (!fs.existsSync(filePath)) {
+      fs.writeFileSync(filePath, "");
+    }
+
     vscode.window.showInformationMessage(`Created: ${filePath}`);
 
     const openPath = vscode.Uri.file(filePath);
@@ -19,19 +29,6 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.workspace.openTextDocument();
 
   context.subscriptions.push(disposable);
-}
-
-const formatDate = (dateTime: Date): string => {
-  const year = dateTime.getFullYear();
-  const month = dateTime.getMonth().toString().padStart(2, "0");
-  const date = dateTime.getDate().toString().padStart(2, "0");
-
-  const hour = dateTime.getHours().toString().padStart(2, "0");
-  const minute = dateTime.getMinutes().toString().padStart(2, "0");
-  const second = dateTime.getSeconds().toString().padStart(2, "0");
-  const millisecond = dateTime.getMilliseconds().toString().padStart(3, "0");
-
-  return `${year}${month}${date}_${hour}${minute}${second}.${millisecond}`;
 };
 
 export function deactivate() {

@@ -2,7 +2,7 @@
   "name": "tempfile",
   "displayName": "Tempfile",
   "description": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "wtetsu",
   "repository": "https://github.com/wtetsu/vscode-tempfile",
   "engines": {
@@ -28,10 +28,8 @@
       "title": "Tempfile",
       "properties": {
         "tempfile.newFilePath": {
-          "type": [
-            "string"
-          ],
-          "default": "{{tmpdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{SSS}.md",
+          "type": "string",
+          "default": "{{tmpdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md",
           "description": "Specifies the new tempfile path template."
         }
       }

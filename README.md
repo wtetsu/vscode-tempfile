@@ -1,6 +1,11 @@
+
 <p align="center">
   <img width="500" src="https://user-images.githubusercontent.com/515948/194064360-6842f71d-7c8d-444e-a819-0b509d3169f8.png" alt="tempfile logo" />
   <br/>
+</p>
+
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile"><img src="https://vsmarketplacebadge.apphb.com/version/wtetsu.tempfile.svg"/></a>
 </p>
 
 # vscode-tempfile

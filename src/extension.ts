@@ -1,29 +1,30 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
+import * as path from "path";
 import * as mustache from "mustache";
 import { makePathParameters } from "./utils";
 
 export const activate = (context: vscode.ExtensionContext) => {
+  // Disable HTML-escaping
+  (mustache as any).escape = (text: any) => {
+    return text;
+  };
+
   const disposable = vscode.commands.registerCommand("vscode-tempfile.newfile", () => {
     const config = vscode.workspace.getConfiguration("tempfile");
-    let pathTemplate = config.get<string>("newFilePath");
-
-    if (!pathTemplate) {
-      pathTemplate = "{{tmpdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{SSS}.md";
+    let pathTemplate = config.get<string>("newFilePath") ?? "";
+    if (!pathTemplate.trim()) {
+      pathTemplate = "{{tmpdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
     }
 
-    const filePath = mustache.render(pathTemplate, makePathParameters(new Date()));
+    const parameters = makePathParameters(new Date());
+    const newFilePath = mustache.render(pathTemplate.trim(), parameters);
 
-    if (!fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, "");
-    }
+    const initialContentTemplate = config.get<string>("initialContent") ?? "";
+    const initialContent = mustache.render(initialContentTemplate, parameters);
 
-    vscode.window.showInformationMessage(`Created: ${filePath}`);
-
-    const openPath = vscode.Uri.file(filePath);
-    vscode.workspace.openTextDocument(openPath).then((doc) => {
-      vscode.window.showTextDocument(doc, { preview: false });
-    });
+    makeTempFile(newFilePath, initialContent);
+    openByTab(newFilePath);
   });
 
   vscode.workspace.openTextDocument();
@@ -31,6 +32,23 @@ export const activate = (context: vscode.ExtensionContext) => {
   context.subscriptions.push(disposable);
 };
 
-export function deactivate() {
+const makeTempFile = async (newFilePath: string, content: string) => {
+  if (fs.existsSync(newFilePath)) {
+    return;
+  }
+
+  const dirPath = path.dirname(newFilePath);
+  fs.mkdirSync(dirPath, { recursive: true });
+  fs.writeFileSync(newFilePath, content);
+};
+
+const openByTab = async (path: string) => {
+  const openPath = vscode.Uri.file(path);
+  const doc = await vscode.workspace.openTextDocument(openPath);
+  await vscode.window.showTextDocument(doc, { preview: false });
+  await vscode.commands.executeCommand("cursorMove", { to: "viewPortBottom" });
+};
+
+export const deactivate = () => {
   // NOP
-}
+};

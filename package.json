@@ -2,7 +2,7 @@
   "name": "tempfile",
   "displayName": "Tempfile",
   "description": "",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "wtetsu",
   "repository": "https://github.com/wtetsu/vscode-tempfile",
   "engines": {

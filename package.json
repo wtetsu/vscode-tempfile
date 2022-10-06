@@ -12,15 +12,20 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:vscode-tempfile.newfile"
+    "onCommand:tempfile.newfile"
   ],
   "main": "./dist/extension.js",
   "icon": "images/icon.png",
   "contributes": {
     "commands": [
       {
-        "command": "vscode-tempfile.newfile",
-        "title": "New tempfile",
+        "command": "tempfile.newfile",
+        "title": "New tempfile"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "tempfile.newfile",
         "key": "ctrl+alt+t",
         "mac": "cmd+alt+t"
       }

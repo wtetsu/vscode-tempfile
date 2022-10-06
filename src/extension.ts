@@ -10,7 +10,7 @@ export const activate = (context: vscode.ExtensionContext) => {
     return text;
   };
 
-  const disposable = vscode.commands.registerCommand("vscode-tempfile.newfile", () => {
+  const disposable = vscode.commands.registerCommand("tempfile.newfile", () => {
     const config = vscode.workspace.getConfiguration("tempfile");
     let pathTemplate = config.get<string>("newFilePath") ?? "";
     if (!pathTemplate.trim()) {

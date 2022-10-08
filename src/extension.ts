@@ -31,7 +31,7 @@ const newfile = () => {
 
   let pathTemplate = config.get<string>("newFilePath") ?? "";
   if (!pathTemplate.trim()) {
-    pathTemplate = "{{tempdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
+    pathTemplate = "{{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
   }
 
   const pathParameters = makePathParameters();

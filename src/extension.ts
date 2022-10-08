@@ -2,7 +2,8 @@ import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
 import * as mustache from "mustache";
-import { makePathParameters } from "./utils";
+import { makeDateParameters } from "./date";
+import { makePathParameters } from "./path";
 
 export const activate = (context: vscode.ExtensionContext) => {
   // Disable HTML-escaping
@@ -11,25 +12,46 @@ export const activate = (context: vscode.ExtensionContext) => {
   };
 
   const disposable = vscode.commands.registerCommand("tempfile.newfile", () => {
-    const config = vscode.workspace.getConfiguration("tempfile");
-    let pathTemplate = config.get<string>("newFilePath") ?? "";
-    if (!pathTemplate.trim()) {
-      pathTemplate = "{{tmpdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
+    try {
+      newfile();
+    } catch (e) {
+      if (e instanceof Error) {
+        vscode.window.showErrorMessage(e.message);
+      }
     }
-
-    const parameters = makePathParameters(new Date());
-    const newFilePath = mustache.render(pathTemplate.trim(), parameters);
-
-    const initialContentTemplate = config.get<string>("initialContent") ?? "";
-    const initialContent = mustache.render(initialContentTemplate, parameters);
-
-    makeTempFile(newFilePath, initialContent);
-    openByTab(newFilePath);
   });
 
   vscode.workspace.openTextDocument();
 
   context.subscriptions.push(disposable);
+};
+
+const newfile = () => {
+  const config = vscode.workspace.getConfiguration("tempfile");
+
+  let pathTemplate = config.get<string>("newFilePath") ?? "";
+  if (!pathTemplate.trim()) {
+    pathTemplate = "{{tempdir}}/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
+  }
+
+  const pathParameters = makePathParameters();
+  const parameters = {
+    ...pathParameters,
+    ...makeDateParameters(new Date()),
+  };
+  const newFilePath = mustache.render(pathTemplate.trim(), parameters);
+
+  if (!pathParameters.wsdir) {
+    if (newFilePath !== mustache.render(pathTemplate.trim(), { ...parameters, wsdir: "dummy" })) {
+      throw new Error("Workspace folder not found");
+    }
+  }
+
+  const initialContentTemplate = config.get<string>("initialContent") ?? "";
+  const initialContent = mustache.render(initialContentTemplate, parameters);
+
+  makeTempFile(newFilePath, initialContent);
+  openByTab(newFilePath);
 };
 
 const makeTempFile = async (newFilePath: string, content: string) => {
@@ -38,6 +60,7 @@ const makeTempFile = async (newFilePath: string, content: string) => {
   }
 
   const dirPath = path.dirname(newFilePath);
+
   fs.mkdirSync(dirPath, { recursive: true });
   fs.writeFileSync(newFilePath, content);
 };

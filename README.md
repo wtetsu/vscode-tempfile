@@ -17,10 +17,11 @@ This extension immediately creates a temporary file and opens it in a new tab.
 
 You can specify the new file path and initial content.
 
-| Config                  | Description      | Default                                                                 |
-| ----------------------- | ---------------- | ----------------------------------------------------------------------- |
-| tempfile.newFilePath    | New file path    | {{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}\_{{HH}}{{mm}}{{ss}}{{SSS}}.md |
-| tempfile.initialContent | New file content | # {{YYYY}}-{{MM}}-{{DD}} {{HH}}:{{mm}}:{{ss}}.{{SSS}}\n                 |
+| Config                  | Description                      | Default                                                                 |
+| ----------------------- | -------------------------------- | ----------------------------------------------------------------------- |
+| tempfile.newFilePath    | New file path                    | {{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}\_{{HH}}{{mm}}{{ss}}{{SSS}}.md |
+| tempfile.initialContent | New file content                 | # {{YYYY}}-{{MM}}-{{DD}} {{HH}}:{{mm}}:{{ss}}.{{SSS}}\n                 |
+| tempfile.append         | If true, append to existing file | false                                                                   |
 
 ## Parameters
 

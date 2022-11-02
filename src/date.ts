@@ -3,7 +3,7 @@ import * as os from "os";
 
 export const makeDateParameters = (dateTime: Date): { [key: string]: string } => {
   const year = dateTime.getFullYear().toString();
-  const month = dateTime.getMonth().toString().padStart(2, "0");
+  const month = (dateTime.getMonth() + 1).toString().padStart(2, "0");
   const date = dateTime.getDate().toString().padStart(2, "0");
 
   const hour = dateTime.getHours().toString().padStart(2, "0");

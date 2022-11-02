@@ -50,26 +50,35 @@ const newfile = () => {
   const initialContentTemplate = config.get<string>("initialContent") ?? "";
   const initialContent = mustache.render(initialContentTemplate, parameters);
 
-  makeTempFile(newFilePath, initialContent);
-  openByTab(newFilePath);
+  const append = config.get<boolean>("append") ?? false;
+
+  if (!fs.existsSync(newFilePath)) {
+    makeTempFile(newFilePath, initialContent);
+  } else {
+    if (append) {
+      fs.appendFileSync(newFilePath, initialContent);
+    }
+  }
+
+  openByTab(newFilePath, append);
 };
 
 const makeTempFile = async (newFilePath: string, content: string) => {
-  if (fs.existsSync(newFilePath)) {
-    return;
-  }
-
   const dirPath = path.dirname(newFilePath);
 
   fs.mkdirSync(dirPath, { recursive: true });
   fs.writeFileSync(newFilePath, content);
 };
 
-const openByTab = async (path: string) => {
+const openByTab = async (path: string, goToBottom: boolean) => {
   const openPath = vscode.Uri.file(path);
   const doc = await vscode.workspace.openTextDocument(openPath);
   await vscode.window.showTextDocument(doc, { preview: false });
   await vscode.commands.executeCommand("cursorMove", { to: "viewPortBottom" });
+
+  if (goToBottom) {
+    await vscode.commands.executeCommand("cursorBottom");
+  }
 };
 
 export const deactivate = () => {

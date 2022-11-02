@@ -36,12 +36,20 @@
         "tempfile.newFilePath": {
           "type": "string",
           "default": "{{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md",
-          "description": "Specifies the new tempfile path template."
+          "description": "Specifies the new tempfile path template.",
+          "order": 0
         },
         "tempfile.initialContent": {
           "type": "string",
           "default": "# {{YYYY}}-{{MM}}-{{DD}} {{HH}}:{{mm}}:{{ss}}.{{SSS}}\n",
-          "description": "Specifies the tempfile initial content."
+          "description": "Specifies the tempfile initial content.",
+          "order": 1
+        },
+        "tempfile.append": {
+          "type": "boolean",
+          "default": "false",
+          "description": "If True, append initialContent to the existing file.",
+          "order": 2
         }
       }
     }

@@ -47,7 +47,7 @@
         },
         "tempfile.append": {
           "type": "boolean",
-          "default": "false",
+          "default": false,
           "description": "If True, append initialContent to the existing file.",
           "order": 2
         }

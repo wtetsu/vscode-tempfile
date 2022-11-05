@@ -11,6 +11,9 @@
 
 This extension immediately creates a temporary file and opens it in a new tab.
 
+Default shortcut key:  `Ctrl+Alt+T` or `⌘+Alt+T`
+
+
 <img src="https://user-images.githubusercontent.com/515948/194067735-9d81973d-71f5-48cc-b6c6-c3e7f3e9d04b.gif" alt="tempfile demo">
 
 ## Configuration

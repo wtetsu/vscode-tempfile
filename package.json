@@ -1,7 +1,7 @@
 {
   "name": "tempfile",
   "displayName": "Tempfile",
-  "description": "",
+  "description": "Quickly create temporary files",
   "version": "1.0.4",
   "publisher": "wtetsu",
   "repository": "https://github.com/wtetsu/vscode-tempfile",
@@ -66,24 +66,24 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/glob": "^8.0.0",
-    "@types/mocha": "^10.0.0",
+    "@types/glob": "^8.0.1",
+    "@types/mocha": "^10.0.1",
     "@types/node": "18.x",
-    "@types/vscode": "1.71.0",
-    "@typescript-eslint/eslint-plugin": "^5.42.0",
-    "@typescript-eslint/parser": "^5.42.0",
-    "@vscode/test-electron": "^2.2.0",
-    "eslint": "^8.26.0",
-    "glob": "^8.0.3",
-    "mocha": "^10.1.0",
-    "prettier": "^2.7.1",
-    "ts-loader": "^9.4.1",
-    "typescript": "^4.8.4",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "@types/vscode": "1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "@vscode/test-electron": "^2.2.2",
+    "eslint": "^8.32.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "prettier": "^2.8.3",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
-    "@types/mustache": "^4.2.1",
+    "@types/mustache": "^4.2.2",
     "mustache": "^4.2.0"
   }
 }

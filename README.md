@@ -3,9 +3,10 @@
   <br/>
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile"><img src="https://vsmarketplacebadge.apphb.com/version/wtetsu.tempfile.svg"/></a>
-</p>
+</p> -->
+[Tempfile - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile)
 
 # vscode-tempfile
 

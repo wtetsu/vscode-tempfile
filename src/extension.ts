@@ -39,12 +39,22 @@ const newfile = async () => {
   }
 
   if (config.get<boolean>("ending") ?? false) {
-    pathTemplate = pathTemplate.replace(/(.*)\.[^.]+$/, "$1"); // remove possible set file endings
+    let ending = pathTemplate;
+    for (let i = pathTemplate.length - 1; i >= 0; i--) {
+      if (['.', '/'].includes(pathTemplate[i])) {
+        ending = pathTemplate.substring(i + 1);
+        pathTemplate = pathTemplate.substring(0, i);
+        break;
+      }
+    }
+    if (pathTemplate === ending) pathTemplate = '';
     const userInput = await vscode.window.showInputBox({
       prompt: 'What file ending?',
     });
-    if (!userInput) {return;}
-    const ending = userInput.trim().replace(/^\./, '');
+    if (userInput) {
+      const strippedUserInput = userInput.trim().replace(/^\./, '');
+      if (strippedUserInput !== '') ending = strippedUserInput;
+    }
     pathTemplate += '.' + (ending !== '' ? ending : 'file');
   }
 

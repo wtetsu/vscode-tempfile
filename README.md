@@ -3,6 +3,11 @@
   <br/>
 </p>
 
+<p align="center">
+  <a href="https://github.com/wtetsu/vscode-tempfile/actions/workflows/test.yml"><img src="https://github.com/wtetsu/vscode-tempfile/actions/workflows/test.yml/badge.svg" alt="Test" /></a>
+</p>
+
+
 <!-- <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile"><img src="https://vsmarketplacebadge.apphb.com/version/wtetsu.tempfile.svg"/></a>
 </p> -->

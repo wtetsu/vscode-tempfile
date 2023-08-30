@@ -11,27 +11,51 @@ export const activate = (context: vscode.ExtensionContext) => {
     return text;
   };
 
-  const disposable = vscode.commands.registerCommand("tempfile.newfile", () => {
-    try {
-      newfile();
-    } catch (e) {
-      if (e instanceof Error) {
-        vscode.window.showErrorMessage(e.message);
+  const register = (name: string) => {
+    const disposable = vscode.commands.registerCommand(name, () => {
+      try {
+        newfile();
+      } catch (e) {
+        if (e instanceof Error) {
+          vscode.window.showErrorMessage(e.message);
+        }
       }
-    }
-  });
+    });
+  
+    vscode.workspace.openTextDocument();
+  
+    context.subscriptions.push(disposable);
+  };
 
-  vscode.workspace.openTextDocument();
-
-  context.subscriptions.push(disposable);
+  ["default", "alt"].forEach(x => register(`tempfile.newfile.${x}`));
 };
 
-const newfile = () => {
+const newfile = async () => {
   const config = vscode.workspace.getConfiguration("tempfile");
 
   let pathTemplate = config.get<string>("newFilePath") ?? "";
   if (!pathTemplate.trim()) {
     pathTemplate = "{{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
+  }
+
+  if (config.get<boolean>("ending") ?? false) {
+    let ending = pathTemplate;
+    for (let i = pathTemplate.length - 1; i >= 0; i--) {
+      if (['.', '/'].includes(pathTemplate[i])) {
+        ending = pathTemplate.substring(i + 1);
+        pathTemplate = pathTemplate.substring(0, i);
+        break;
+      }
+    }
+    if (pathTemplate === ending) pathTemplate = '';
+    const userInput = await vscode.window.showInputBox({
+      prompt: 'What file ending?',
+    });
+    if (userInput) {
+      const strippedUserInput = userInput.trim().replace(/^\./, '');
+      if (strippedUserInput !== '') ending = strippedUserInput;
+    }
+    pathTemplate += '.' + (ending !== '' ? ending : 'file');
   }
 
   const pathParameters = makePathParameters();

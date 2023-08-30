@@ -19,8 +19,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "tempfile.newfile",
+        "command": "tempfile.newfile.default",
         "title": "New tempfile"
+      },
+      {
+        "command": "tempfile.newfile.alt",
+        "title": "New tmpfile"
       }
     ],
     "keybindings": [
@@ -50,6 +54,12 @@
           "default": false,
           "description": "If True, append initialContent to the existing file.",
           "order": 2
+        },
+        "tempfile.ending": {
+          "type": "boolean",
+          "default": false,
+          "description": "If True, will ask which file ending you want.",
+          "order": 3
         }
       }
     }

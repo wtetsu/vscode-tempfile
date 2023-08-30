@@ -19,12 +19,12 @@
   "contributes": {
     "commands": [
       {
-        "command": "tempfile.newfile.default",
+        "command": "tempfile.newfile",
         "title": "New tempfile"
       },
       {
-        "command": "tempfile.newfile.alt",
-        "title": "New tmpfile"
+        "command": "tempfile.newfile_with_extension",
+        "title": "New tempfile with extension"
       }
     ],
     "keybindings": [
@@ -32,6 +32,11 @@
         "command": "tempfile.newfile",
         "key": "ctrl+alt+t",
         "mac": "cmd+alt+t"
+      },
+      {
+        "command": "tempfile.newfile_with_extension",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t"
       }
     ],
     "configuration": {
@@ -54,12 +59,6 @@
           "default": false,
           "description": "If True, append initialContent to the existing file.",
           "order": 2
-        },
-        "tempfile.ending": {
-          "type": "boolean",
-          "default": false,
-          "description": "If True, will ask which file ending you want.",
-          "order": 3
         }
       }
     }

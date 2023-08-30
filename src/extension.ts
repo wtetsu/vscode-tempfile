@@ -11,87 +11,83 @@ export const activate = (context: vscode.ExtensionContext) => {
     return text;
   };
 
-  const register = (name: string) => {
-    const disposable = vscode.commands.registerCommand(name, () => {
-      try {
-        newfile();
-      } catch (e) {
-        if (e instanceof Error) {
-          vscode.window.showErrorMessage(e.message);
-        }
-      }
-    });
-  
-    vscode.workspace.openTextDocument();
-  
-    context.subscriptions.push(disposable);
-  };
-
-  ["default", "alt"].forEach(x => register(`tempfile.newfile.${x}`));
+  context.subscriptions.push(register("tempfile.newfile", () => newfile("")));
+  context.subscriptions.push(register("tempfile.newfile_with_extension", newfileWithExtension));
 };
 
-const newfile = async () => {
-  const config = vscode.workspace.getConfiguration("tempfile");
-
-  let pathTemplate = config.get<string>("newFilePath") ?? "";
-  if (!pathTemplate.trim()) {
-    pathTemplate = "{{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
-  }
-
-  if (config.get<boolean>("ending") ?? false) {
-    let ending = pathTemplate;
-    for (let i = pathTemplate.length - 1; i >= 0; i--) {
-      if (['.', '/'].includes(pathTemplate[i])) {
-        ending = pathTemplate.substring(i + 1);
-        pathTemplate = pathTemplate.substring(0, i);
-        break;
+const register = (name: string, func: Function) => {
+  return vscode.commands.registerCommand(name, () => {
+    try {
+      func();
+    } catch (e) {
+      if (e instanceof Error) {
+        vscode.window.showErrorMessage(e.message);
       }
     }
-    if (pathTemplate === ending) pathTemplate = '';
-    const userInput = await vscode.window.showInputBox({
-      prompt: 'What file ending?',
-    });
-    if (userInput) {
-      const strippedUserInput = userInput.trim().replace(/^\./, '');
-      if (strippedUserInput !== '') ending = strippedUserInput;
-    }
-    pathTemplate += '.' + (ending !== '' ? ending : 'file');
+  });
+};
+
+const newfileWithExtension = async () => {
+  const pathTemplate = retrieveFilePathTemplate();
+  const parameters = makeParameters();
+  const defaultPath = mustache.render(pathTemplate.trim(), parameters);
+  const extension = getExtension(defaultPath);
+
+  const message = extension ? `New file extension (default: ${extension})` : "New file extension";
+
+  const inputtedExtension = await vscode.window.showInputBox({
+    prompt: message,
+  });
+  if (inputtedExtension === undefined) {
+    return;
   }
 
-  const pathParameters = makePathParameters();
-  const parameters = {
-    ...pathParameters,
-    ...makeDateParameters(new Date()),
-  };
+  newfile(inputtedExtension);
+};
+
+const newfile = (extension: string) => {
+  const pathTemplate = retrieveFilePathTemplate();
+
+  const parameters = makeParameters();
   const newFilePath = mustache.render(pathTemplate.trim(), parameters);
 
-  if (!pathParameters.wsdir) {
+  if (!parameters.wsdir) {
     if (newFilePath !== mustache.render(pathTemplate.trim(), { ...parameters, wsdir: "dummy" })) {
       throw new Error("Workspace folder not found");
     }
   }
+
+  const config = vscode.workspace.getConfiguration("tempfile");
 
   const initialContentTemplate = config.get<string>("initialContent") ?? "";
   const initialContent = mustache.render(initialContentTemplate, parameters);
 
   const append = config.get<boolean>("append") ?? false;
 
-  if (!fs.existsSync(newFilePath)) {
-    makeTempFile(newFilePath, initialContent);
+  const actualNewFilePath = extension ? replaceExtension(newFilePath, extension) : newFilePath;
+
+  if (!fs.existsSync(actualNewFilePath)) {
+    makeTempFile(actualNewFilePath, initialContent);
   } else {
     if (append) {
-      fs.appendFileSync(newFilePath, initialContent);
+      fs.appendFileSync(actualNewFilePath, initialContent);
     }
   }
 
-  openByTab(newFilePath, append);
+  openByTab(actualNewFilePath, append);
 };
 
 const makeTempFile = async (newFilePath: string, content: string) => {
   const dirPath = path.dirname(newFilePath);
 
-  fs.mkdirSync(dirPath, { recursive: true });
-  fs.writeFileSync(newFilePath, content);
+  try {
+    fs.mkdirSync(dirPath, { recursive: true });
+    fs.writeFileSync(newFilePath, content);
+  } catch (e) {
+    if (e instanceof Error) {
+      vscode.window.showErrorMessage(e.message);
+    }
+  }
 };
 
 const openByTab = async (path: string, goToBottom: boolean) => {
@@ -107,4 +103,40 @@ const openByTab = async (path: string, goToBottom: boolean) => {
 
 export const deactivate = () => {
   // NOP
+};
+
+const getExtension = (filePath: string): string => {
+  const lastSlashIndex = Math.max(filePath.lastIndexOf("/"), filePath.lastIndexOf("\\"));
+  const lastDotIndex = filePath.lastIndexOf(".");
+
+  if (lastDotIndex > lastSlashIndex) {
+    return filePath.substring(lastDotIndex + 1);
+  }
+  return "";
+};
+
+const replaceExtension = (filePath: string, newExtension: string): string => {
+  const extension = getExtension(filePath);
+  if (extension) {
+    return filePath.substring(0, filePath.length - extension.length) + newExtension;
+  }
+  return filePath + "." + newExtension;
+};
+
+const retrieveFilePathTemplate = (): string => {
+  const config = vscode.workspace.getConfiguration("tempfile");
+  const pathTemplate = config.get<string>("newFilePath") ?? "";
+  if (!pathTemplate.trim()) {
+    return "{{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}_{{HH}}{{mm}}{{ss}}{{SSS}}.md";
+  }
+  return pathTemplate;
+};
+
+const makeParameters = (): { [key: string]: string } => {
+  const pathParameters = makePathParameters();
+  const parameters = {
+    ...pathParameters,
+    ...makeDateParameters(new Date()),
+  };
+  return parameters;
 };

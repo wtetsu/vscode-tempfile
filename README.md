@@ -7,20 +7,26 @@
   <a href="https://github.com/wtetsu/vscode-tempfile/actions/workflows/test.yml"><img src="https://github.com/wtetsu/vscode-tempfile/actions/workflows/test.yml/badge.svg" alt="Test" /></a>
 </p>
 
-
 <!-- <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile"><img src="https://vsmarketplacebadge.apphb.com/version/wtetsu.tempfile.svg"/></a>
 </p> -->
+
 [Tempfile - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile)
 
 # vscode-tempfile
 
 This extension immediately creates a temporary file and opens it in a new tab.
 
-Default shortcut key:  `Ctrl+Alt+T` or `⌘+Alt+T`
-
+Default shortcut key: `Ctrl+Alt+T` or `⌘+Alt+T`
 
 <img src="https://user-images.githubusercontent.com/515948/194067735-9d81973d-71f5-48cc-b6c6-c3e7f3e9d04b.gif" alt="tempfile demo">
+
+## Commands
+
+| Command                     | Default shortcut key      |
+| --------------------------- | ------------------------- |
+| New Tempfile                | `Ctrl+Alt+T` or `⌘+Alt+T` |
+| New Tempfile with extension | `Ctrl+SHift+T`            |
 
 ## Configuration
 

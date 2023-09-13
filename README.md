@@ -26,7 +26,7 @@ Default shortcut key: `Ctrl+Alt+T` or `⌘+Alt+T`
 | Command                     | Default shortcut key      |
 | --------------------------- | ------------------------- |
 | New tempfile                | `Ctrl+Alt+T` or `⌘+Alt+T` |
-| New tempfile with extension | `Ctrl+SHift+T`            |
+| New tempfile with extension | `Ctrl+Shift+T`            |
 
 ## Configuration
 

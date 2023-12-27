@@ -35,8 +35,8 @@
       },
       {
         "command": "tempfile.newfile_with_extension",
-        "key": "ctrl+shift+t",
-        "mac": "cmd+shift+t"
+        "key": "ctrl+alt+shift+t",
+        "mac": "cmd+alt+shift+t"
       }
     ],
     "configuration": {

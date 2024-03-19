@@ -23,10 +23,10 @@ Default shortcut key: `Ctrl+Alt+T` or `⌘+Alt+T`
 
 ## Commands
 
-| Command                     | Default shortcut key      |
-| --------------------------- | ------------------------- |
-| New tempfile                | `Ctrl+Alt+T` or `⌘+Alt+T` |
-| New tempfile with extension | `Ctrl+Alt+Shift+T`            |
+| Command                     | Default shortcut key                       |
+| --------------------------- | ------------------------------------------ |
+| New tempfile                | `Ctrl+Alt+T` or `⌘+Alt+T`                 |
+| New tempfile with extension | `Ctrl+Alt+Shift+T` or `⌘+Alt+Shift+T`     |
 
 ## Configuration
 

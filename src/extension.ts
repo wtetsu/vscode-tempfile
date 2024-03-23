@@ -66,6 +66,10 @@ const newfile = (extension: string) => {
 
   const actualNewFilePath = extension ? replaceExtension(newFilePath, extension) : newFilePath;
 
+  if (isDirectory(actualNewFilePath)) {
+    throw new Error(`The path ${actualNewFilePath} is directory`);
+  }
+
   if (!fs.existsSync(actualNewFilePath)) {
     makeTempFile(actualNewFilePath, initialContent);
   } else {
@@ -75,6 +79,13 @@ const newfile = (extension: string) => {
   }
 
   openByTab(actualNewFilePath, append);
+};
+
+const isDirectory = (path: string): boolean => {
+  if (!fs.existsSync(path)) {
+    return false;
+  }
+  return fs.statSync(path).isDirectory();
 };
 
 const makeTempFile = async (newFilePath: string, content: string) => {

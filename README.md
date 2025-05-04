@@ -15,7 +15,7 @@
 
 # vscode-tempfile
 
-This extension immediately creates a temporary file and opens it in a new tab.
+This extension instantly creates a temporary file and opens it in a new tab.
 
 Default shortcut key: `Ctrl+Alt+T` or `⌘+Alt+T`
 
@@ -23,35 +23,35 @@ Default shortcut key: `Ctrl+Alt+T` or `⌘+Alt+T`
 
 ## Commands
 
-| Command                     | Default shortcut key                       |
-| --------------------------- | ------------------------------------------ |
-| New tempfile                | `Ctrl+Alt+T` or `⌘+Alt+T`                 |
-| New tempfile with extension | `Ctrl+Alt+Shift+T` or `⌘+Alt+Shift+T`     |
+| Command                     | Default shortcut key                  |
+| --------------------------- | ------------------------------------- |
+| New tempfile                | `Ctrl+Alt+T` or `⌘+Alt+T`             |
+| New tempfile with extension | `Ctrl+Alt+Shift+T` or `⌘+Alt+Shift+T` |
 
 ## Configuration
 
-You can specify the new file path and initial content.
+You can customize the file path and initial content.
 
-| Config                  | Description                      | Default                                                                 |
-| ----------------------- | -------------------------------- | ----------------------------------------------------------------------- |
-| tempfile.newFilePath    | New file path                    | {{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}\_{{HH}}{{mm}}{{ss}}{{SSS}}.md |
-| tempfile.initialContent | New file content                 | # {{YYYY}}-{{MM}}-{{DD}} {{HH}}:{{mm}}:{{ss}}.{{SSS}}\n                 |
-| tempfile.append         | If true, append to existing file | false                                                                   |
+| Config                  | Description                        | Default                                                                 |
+| ----------------------- | ---------------------------------- | ----------------------------------------------------------------------- |
+| tempfile.newFilePath    | New file path                      | {{tempdir}}/tempfile/{{YYYY}}{{MM}}{{DD}}\_{{HH}}{{mm}}{{ss}}{{SSS}}.md |
+| tempfile.initialContent | New file content                   | # {{YYYY}}-{{MM}}-{{DD}} {{HH}}:{{mm}}:{{ss}}.{{SSS}}\n                 |
+| tempfile.append         | If `true`, append to existing file | false                                                                   |
 
 ## Parameters
 
-| Parameter   | Value          |
-| ----------- | -------------- |
-| {{tempdir}} | os.tmpdir()    |
-| {{wsdir}}   | Workspace root |
-| {{YYYY}}    | Year           |
-| {{MM}}      | Month          |
-| {{DD}}      | Day            |
-| {{HH}}      | Hour           |
-| {{mm}}      | Minute         |
-| {{ss}}      | Second         |
-| {{SSS}}     | Millisecond    |
+| Parameter   | Value                                            |
+| ----------- | ------------------------------------------------ |
+| {{tempdir}} | The system's temporary directory (`os.tmpdir()`) |
+| {{wsdir}}   | Workspace root                                   |
+| {{YYYY}}    | Year                                             |
+| {{MM}}      | Month                                            |
+| {{DD}}      | Day                                              |
+| {{HH}}      | Hour                                             |
+| {{mm}}      | Minute                                           |
+| {{ss}}      | Second                                           |
+| {{SSS}}     | Millisecond                                      |
 
-## Third party data
+## Third-party attribution
 
 - [Draw, edit, new icon](https://www.iconfinder.com/icons/3994420/draw_edit_new_pen_write_icon)

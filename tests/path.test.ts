@@ -6,16 +6,16 @@ vi.mock("vscode", () => ({
     workspaceFolders: [
       {
         uri: {
-          fsPath: "/test/workspace"
-        }
-      }
-    ]
-  }
+          fsPath: "/test/workspace",
+        },
+      },
+    ],
+  },
 }));
 
 // Mock os module to control tmpdir for testing
 vi.mock("node:os", () => ({
-  tmpdir: () => "/tmp"
+  tmpdir: () => "/tmp",
 }));
 
 describe("path utilities", () => {
@@ -32,8 +32,8 @@ describe("path utilities", () => {
     // Mock empty workspace
     vi.doMock("vscode", () => ({
       workspace: {
-        workspaceFolders: []
-      }
+        workspaceFolders: [],
+      },
     }));
 
     // Re-import to get fresh module with new mock

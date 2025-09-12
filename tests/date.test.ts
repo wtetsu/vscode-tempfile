@@ -15,7 +15,7 @@ describe("date utilities", () => {
     expect(typeof params.mm).toBe("string");
     expect(typeof params.ss).toBe("string");
     expect(typeof params.SSS).toBe("string");
-    
+
     // Check actual values
     expect(params.YYYY).toBe("2024");
     expect(params.MM).toBe("01");
@@ -30,7 +30,7 @@ describe("date utilities", () => {
     // Use local time constructor
     const time = new Date(2024, 0, 1, 1, 1, 1, 1); // Jan 1, 2024 01:01:01.001 local
     const dateParams = utils.makeDateParams(time);
-    
+
     expect(dateParams.YYYY).toBe("2024");
     expect(dateParams.MM).toBe("01");
     expect(dateParams.DD).toBe("01");
@@ -43,7 +43,7 @@ describe("date utilities", () => {
   it("should include tmpdir parameter", () => {
     const time = new Date(2024, 0, 1, 12, 0, 0, 0);
     const params = utils.makeDateParameters(time);
-    
+
     // Should have tmpdir parameter
     expect(typeof params.tmpdir).toBe("string");
   });

@@ -22,7 +22,9 @@ export default defineConfig({
         "tests/**",
         ".vscode-test/**",
         "coverage/**",
-        "src/extension.ts" // VSCode extension entry point - integration testing needed
+        "src/extension.ts", // VSCode extension entry point - integration testing needed
+        "vite.build.config.ts", // Build configuration file
+        "vitest.config.ts" // Test configuration file
       ],
     },
     

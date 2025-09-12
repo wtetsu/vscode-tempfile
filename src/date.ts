@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import * as os from "os";
+import * as os from "node:os";
 
 type DateParams = { [key: string]: string };
 
@@ -37,12 +37,17 @@ export const makeDateParams = (dateTime: Date): DateParams => {
   const millisecond = dateTime.getMilliseconds().toString().padStart(3, "0");
 
   return {
+    // biome-ignore lint/style/useNamingConvention: External API for mustache templates ({{YYYY}}, {{MM}}, etc)
     YYYY: year,
+    // biome-ignore lint/style/useNamingConvention: External API for mustache templates
     MM: month,
+    // biome-ignore lint/style/useNamingConvention: External API for mustache templates
     DD: date,
+    // biome-ignore lint/style/useNamingConvention: External API for mustache templates
     HH: hour,
     mm: minute,
     ss: second,
+    // biome-ignore lint/style/useNamingConvention: External API for mustache templates
     SSS: millisecond,
   };
 };

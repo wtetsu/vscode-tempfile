@@ -1,12 +1,13 @@
-import * as vscode from "vscode";
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import * as mustache from "mustache";
+import * as vscode from "vscode";
 import { makeDateParameters } from "./date";
 import { makePathParameters } from "./path";
 
 export const activate = (context: vscode.ExtensionContext) => {
   // Disable HTML-escaping
+  // biome-ignore lint/suspicious/noExplicitAny: External library internal API requires any
   (mustache as any).escape = (text: any) => {
     return text;
   };
@@ -15,7 +16,7 @@ export const activate = (context: vscode.ExtensionContext) => {
   context.subscriptions.push(register("tempfile.newfile_with_extension", newfileWithExtension));
 };
 
-const register = (name: string, func: Function) => {
+const register = (name: string, func: () => void) => {
   return vscode.commands.registerCommand(name, () => {
     try {
       func();
@@ -131,7 +132,7 @@ const replaceExtension = (filePath: string, newExtension: string): string => {
   if (extension) {
     return filePath.substring(0, filePath.length - extension.length) + newExtension;
   }
-  return filePath + "." + newExtension;
+  return `${filePath}.${newExtension}`;
 };
 
 const retrieveFilePathTemplate = (): string => {

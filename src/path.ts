@@ -1,5 +1,5 @@
+import { tmpdir } from "node:os";
 import * as vscode from "vscode";
-import { tmpdir } from "os";
 
 export const makePathParameters = () => {
   const tempdir = tmpdir();

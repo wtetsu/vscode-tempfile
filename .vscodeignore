@@ -3,6 +3,8 @@
 out/**
 node_modules/**
 src/**
+tests/**
+coverage/**
 .gitignore
 .yarnrc
 webpack.config.js
@@ -11,4 +13,9 @@ vsc-extension-quickstart.md
 **/.eslintrc.json
 **/*.map
 **/*.ts
-.*/
+.*/ 
+# Vite and modern tooling
+vite.build.config.ts
+vitest.config.ts
+biome.json
+CLAUDE.md

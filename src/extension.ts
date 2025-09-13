@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import * as mustache from "mustache";
+import Mustache from "mustache";
 import * as vscode from "vscode";
 import { makeDateParameters } from "./date";
 import { makePathParameters } from "./path";
@@ -8,7 +8,7 @@ import { makePathParameters } from "./path";
 export const activate = (context: vscode.ExtensionContext) => {
   // Disable HTML-escaping
   // biome-ignore lint/suspicious/noExplicitAny: External library internal API requires any
-  (mustache as any).escape = (text: any) => {
+  (Mustache as any).escape = (text: any) => {
     return text;
   };
 
@@ -31,7 +31,7 @@ const register = (name: string, func: () => void) => {
 const newfileWithExtension = async () => {
   const pathTemplate = retrieveFilePathTemplate();
   const parameters = makeParameters();
-  const defaultPath = mustache.render(pathTemplate.trim(), parameters);
+  const defaultPath = Mustache.render(pathTemplate.trim(), parameters);
   const extension = getExtension(defaultPath);
 
   const message = extension ? `New file extension (default: ${extension})` : "New file extension";
@@ -50,10 +50,10 @@ const newfile = (extension: string) => {
   const pathTemplate = retrieveFilePathTemplate();
 
   const parameters = makeParameters();
-  const newFilePath = mustache.render(pathTemplate.trim(), parameters);
+  const newFilePath = Mustache.render(pathTemplate.trim(), parameters);
 
   if (!parameters.wsdir) {
-    if (newFilePath !== mustache.render(pathTemplate.trim(), { ...parameters, wsdir: "dummy" })) {
+    if (newFilePath !== Mustache.render(pathTemplate.trim(), { ...parameters, wsdir: "dummy" })) {
       throw new Error("Workspace folder not found");
     }
   }
@@ -61,7 +61,7 @@ const newfile = (extension: string) => {
   const config = vscode.workspace.getConfiguration("tempfile");
 
   const initialContentTemplate = config.get<string>("initialContent") ?? "";
-  const initialContent = mustache.render(initialContentTemplate, parameters);
+  const initialContent = Mustache.render(initialContentTemplate, parameters);
 
   const append = config.get<boolean>("append") ?? false;
 

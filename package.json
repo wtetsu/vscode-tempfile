@@ -65,9 +65,9 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
-    "compile": "vite build --config vite.build.config.ts",
-    "watch": "vite build --config vite.build.config.ts --watch",
-    "package": "vite build --config vite.build.config.ts --mode production",
+    "compile": "vite build --config vite.build.config.mjs",
+    "watch": "vite build --config vite.build.config.mjs --watch",
+    "package": "vite build --config vite.build.config.mjs --mode production",
     "lint": "biome lint src",
     "lint:fix": "biome lint --write src",
     "format": "biome format src",
@@ -82,12 +82,12 @@
   "devDependencies": {
     "@biomejs/biome": "^2.2.4",
     "@types/mustache": "^4.2.6",
-    "@types/node": "^24.3.1",
+    "@types/node": "^24.3.3",
     "@types/vscode": "^1.85.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "typescript": "^5.9.2",
-    "vite": "^6.3.6",
+    "vite": "^7.1.5",
     "vitest": "^3.2.4"
   },
   "dependencies": {

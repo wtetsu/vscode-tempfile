@@ -2,7 +2,7 @@
   "name": "tempfile",
   "displayName": "Tempfile",
   "description": "Quickly create temporary files",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "publisher": "wtetsu",
   "repository": "https://github.com/wtetsu/vscode-tempfile",
   "engines": {

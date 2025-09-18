@@ -3,15 +3,9 @@
 </p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile">
-    <img src="https://img.shields.io/visual-studio-marketplace/v/wtetsu.tempfile?style=flat-square&label=VS%20Code%20Marketplace&logo=visual-studio-code" alt="VS Code Marketplace"/>
-  </a>
-  <a href="https://github.com/wtetsu/vscode-tempfile/actions/workflows/test.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/wtetsu/vscode-tempfile/test.yml?style=flat-square&label=Tests&logo=github" alt="Test Status" />
-  </a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile">
-    <img src="https://img.shields.io/visual-studio-marketplace/d/wtetsu.tempfile?style=flat-square&label=Downloads&logo=visual-studio-code" alt="Downloads"/>
-  </a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile"><img src="https://img.shields.io/visual-studio-marketplace/v/wtetsu.tempfile?style=flat-square&label=VS%20Code%20Marketplace&logo=visual-studio-code" alt="VS Code Marketplace"/></a>
+  <a href="https://github.com/wtetsu/vscode-tempfile/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/wtetsu/vscode-tempfile/test.yml?style=flat-square&label=Tests&logo=github" alt="Test Status" /></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=wtetsu.tempfile"><img src="https://img.shields.io/visual-studio-marketplace/d/wtetsu.tempfile?style=flat-square&label=Downloads&logo=visual-studio-code" alt="Downloads"/></a>
 </p>
 
 # ⚡ Tempfile for VS Code
